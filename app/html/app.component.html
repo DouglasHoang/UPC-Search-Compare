@@ -1,0 +1,8 @@
+<div class="toolbar">
+    <input #term type="text" placeholder="Search Item or UPC" class="search" (keyup)="search(term.value)"/>
+    <ul>
+        <li *ngFor="let item of items | async">{{ item }}</li>
+    </ul>
+</div>
+
+<my-description></my-description>
