@@ -5,6 +5,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
 
 import { AppComponent }  from './app.component';
 import { DescriptionComponent } from './description.component';
+import { ItemComponent } from './item.component';
 
 
 
@@ -14,7 +15,8 @@ import { DescriptionComponent } from './description.component';
                   HttpModule,
                   JsonpModule ],
   declarations: [ AppComponent,
-                  DescriptionComponent ],
+                  DescriptionComponent,
+                  ItemComponent ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }

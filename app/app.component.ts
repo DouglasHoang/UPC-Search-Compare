@@ -3,6 +3,7 @@ import { Observable }       from 'rxjs/Observable';
 import { ItemService } from './item.service';
 import { Item } from './item';
 import './rxjs-operators';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'my-app',
@@ -12,19 +13,26 @@ import './rxjs-operators';
 })
 
 export class AppComponent implements OnInit {
-//  items: Observable<Item[]>;
+
+    private searchTermStream = new Subject<string>();
+    items: Observable<String[]>;
     itemName: string = "";
     itemNumber: string = "";
-/*
-    search(term: string) {
-        console.log(this.itemService.searchEbay(term));
-    }
-*/
+    errorMsg:string;
 
-    items: Observable<string[]>;
+
+
     search (term: string) {
-        this.items = this.itemService.searchEbay(term);
+        if (!term) {
+            return;
+        }
+        this.searchTermStream.next(term);
     }
 
-    constructor(private itemService: ItemService) { }
+    constructor(private itemService: ItemService) {
+        this.items = this.searchTermStream
+        .debounceTime(300)
+        .distinctUntilChanged()
+        .switchMap((term: string) => this.itemService.searchEbay(term));
+     }
 }
