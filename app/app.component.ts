@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
     itemName: string = "";
     itemNumber: string = "";
     errorMsg:string;
-
-
+    item: any;
+    
 
     search (term: string) {
         if (!term) {
@@ -28,6 +28,8 @@ export class AppComponent implements OnInit {
         }
         this.searchTermStream.next(term);
     }
+
+
 
     constructor(private itemService: ItemService) {
         this.items = this.searchTermStream
