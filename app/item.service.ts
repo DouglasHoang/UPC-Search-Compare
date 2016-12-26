@@ -36,7 +36,9 @@ export class ItemService {
         params.set('format', 'json');
         params.set('callback', 'JSONP_CALLBACK');
 
+        
 */      
+
         return this.jsonp.get(ebayUrl, {search: params}).map(response => <string[]> response.json().findItemsByKeywordsResponse[0].searchResult[0].item).catch(this.handleError);
 
     }

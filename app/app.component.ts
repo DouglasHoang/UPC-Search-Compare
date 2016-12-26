@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable }       from 'rxjs/Observable';
 import { ItemService } from './item.service';
 import { Item } from './item';
@@ -16,10 +16,9 @@ export class AppComponent implements OnInit {
 
     private searchTermStream = new Subject<string>();
     items: Observable<String[]>;
-    itemName: string = "";
-    itemNumber: string = "";
+    itemName: string;
+    itemNumber: string;
     errorMsg:string;
-    item: any;
     
 
     search (term: string) {
@@ -27,6 +26,7 @@ export class AppComponent implements OnInit {
             return;
         }
         this.searchTermStream.next(term);
+
     }
 
 
@@ -36,5 +36,7 @@ export class AppComponent implements OnInit {
         .debounceTime(300)
         .distinctUntilChanged()
         .switchMap((term: string) => this.itemService.searchEbay(term));
+
+        let subscription = this.items.subscribe(value => console.log(value));
      }
 }
