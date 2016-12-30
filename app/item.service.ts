@@ -41,7 +41,7 @@ export class ItemService {
         
 */      
 
-        return this.jsonp.get(ebayUrl, {search: params}).map(response => <string[]> response.json())
+        return this.jsonp.get(ebayUrl, {search: params}).map(response => <string[]> response.json()).catch(this.handleError);
 
     }
 
@@ -80,7 +80,7 @@ export class ItemService {
         let upcUrl = "https://api.upcitemdb.com/prod/trial/lookup";
         let params = new URLSearchParams();
         params.set('upc', term);
-        return this.http.get(upcUrl, {search: params}).map(response => <string[]> response.json());
+        return this.http.get(upcUrl, {search: params}).map(response => <string[]> response.json()).catch(this.handleError);
 
     }
 

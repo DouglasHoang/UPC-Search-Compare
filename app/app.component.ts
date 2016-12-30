@@ -50,8 +50,8 @@ export class AppComponent implements OnInit {
 
 
 
-        let subscription = this.itemsEbay.subscribe(value => {console.log(value); this.ebayJson = value});
-        let subscription1 = this.itemsUpc.subscribe(value => {console.log(value); this.upcJson = value});
+        let subscription = this.itemsEbay.subscribe(value => {if (value.findItemsByKeywordsResponse[0].ack[0] == "Success") {this.ebayJson = value;}});
+        let subscription1 = this.itemsUpc.subscribe(value => {if (value.code != "INVALID_UPC") {this.upcJson = value}});
 
      }
 }

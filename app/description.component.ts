@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component( {
     selector: 'my-description',
@@ -8,11 +8,7 @@ import { Component } from '@angular/core';
 
 
 export class DescriptionComponent {
-/*    
-    title: string = "iPad";
-    upc: any = 43254322;
-    pictureUrl: string = "http://getactionsapp.com/img/mask-ipad.png";
-    description: string = "This is a tablet";
-*/
+    @Input()
+    items:any;
     
 }

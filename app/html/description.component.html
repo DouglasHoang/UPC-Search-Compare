@@ -1,3 +1,17 @@
-<h2><img [src]="pictureUrl" alt="item" style="width:100px;height:100px">{{ title }}</h2>
-<h3>UPC: {{ upc  }}</h3>
-<p>{{ description }}</p>
+<div *ngIf="items">
+    <div class="description">
+        <div>
+            <img [src]="items.items[0].images[0]" [alt]="items.items[0].title">
+        </div>
+        <ul>
+            <li>{{ items.items[0].title }}</li>
+            <li>{{ items.items[0].upc }}</li>
+            <li>{{ items.items[0].brand }}</li>
+            <li>{{ items.items[0].model }}</li>
+            <li>{{ items.items[0].color }}</li>
+            <li>{{ items.items[0].size }}</li>
+            <li>{{ items.items[0].dimension }}</li>
+            <li>{{ items.items[0].weight }}</li>
+        </ul>
+    </div>
+</div> 
