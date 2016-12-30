@@ -11,8 +11,7 @@ import './rxjs-operators';
 export class ItemComponent {
 
     @Input()
-    items: Observable<String[]>;
-    @Input()
-    itemName:string;
+    items: any;
+
     
 }

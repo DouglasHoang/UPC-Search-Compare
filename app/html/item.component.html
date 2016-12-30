@@ -1,5 +1,7 @@
     <ul>
-        <li *ngFor="let item of items | async">
+
+<!--
+        <li *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
             <img [src] ="item.galleryURL" alt="picture" style="width:100px;height:100px">
             <a [href]="item.viewItemURL">{{ item.title }}</a>
             <p>Condition: {{ item.condition[0].conditionDisplayName }}</p>
@@ -7,4 +9,6 @@
 
     
         </li>
+-->
+    {{ any }}
     </ul>
