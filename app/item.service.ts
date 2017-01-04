@@ -79,8 +79,13 @@ export class ItemService {
 
         let upcUrl = "https://api.upcitemdb.com/prod/trial/lookup";
         let params = new URLSearchParams();
+        const headers = new Headers();
+        headers.append('Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,x-api-key');
+        headers.append('Access-Control-Allow-Methods', 'GET, POST');
+        headers.append('Access-Control-Allow-Origin', '*');
+   
         params.set('upc', term);
-        return this.http.get(upcUrl, {search: params}).map(response => <string[]> response.json()).catch(this.handleError);
+        return this.http.get(upcUrl, {search: params, headers:headers}).map(response => <string[]> response.json()).catch(this.handleError);
 
     }
 

@@ -1,17 +1,19 @@
 <div *ngIf="items">
     <div class="description">
-        <div>
+        <div class="img-description">
             <img [src]="items.items[0].images[0]" [alt]="items.items[0].title">
         </div>
-        <ul>
-            <li>{{ items.items[0].title }}</li>
-            <li>{{ items.items[0].upc }}</li>
-            <li>{{ items.items[0].brand }}</li>
-            <li>{{ items.items[0].model }}</li>
-            <li>{{ items.items[0].color }}</li>
-            <li>{{ items.items[0].size }}</li>
-            <li>{{ items.items[0].dimension }}</li>
-            <li>{{ items.items[0].weight }}</li>
-        </ul>
+        <div class="content-desciption">
+            <ul>
+                <li>{{ items.items[0].title }}</li>
+                <li>{{ items.items[0].upc }}</li>
+                <li>{{ items.items[0].brand }}</li>
+                <li>{{ items.items[0].model }}</li>
+                <li>{{ items.items[0].color }}</li>
+                <li>{{ items.items[0].size }}</li>
+                <li>{{ items.items[0].dimension }}</li>
+                <li>{{ items.items[0].weight }}</li>
+            </ul>
+        </div>
     </div>
 </div> 

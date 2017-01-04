@@ -8,14 +8,19 @@ li {
     list-style-type: none; 
 }
 
-ul, img {
-    border: 1px black solid;
-}
 
 .description {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    
+    padding-top: 10px;
+}
+
+.img-description {
+    width: auto;
+
+}
+
+.content-description {
+    width: auto;
+
 }

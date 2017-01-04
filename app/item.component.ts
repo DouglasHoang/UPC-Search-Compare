@@ -13,5 +13,7 @@ export class ItemComponent {
     @Input()
     items: any;
 
+    @Input()
+    itemsUPC: any;
     
 }
