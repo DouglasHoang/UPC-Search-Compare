@@ -47,91 +47,20 @@ export class ItemService {
 
     searchAmazon(term: string) {
 
-/*  Amazon search not available yet
-
-            var hash = CryptoJS.HmacSHA256("GET\nwebservices.amazon.com\n/onca/xml\nAWSAccessKeyId=AKIAJJULMZAIRV5GEOLA&AssociateTag=dh4ang-20&ItemId=0679722769&Operation=ItemLookup&ResponseGroup=Images%2CItemAttributes%2COffers%2CReviews&Service=AWSECommerceService&Timestamp="+ this.getTimeStamp(), "PFThIve6mJbL0c3GX9qKV+oWfHBXqGpKB6k9apQP");
-            var hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
-
-            hashInBase64 = hashInBase64.replace("=", "%3D");
-            hashInBase64 = hashInBase64.replace("+", "%2B");
-
-            var url = "https://webservices.amazon.com/onca/xml?AWSAccessKeyId=AKIAJJULMZAIRV5GEOLA&AssociateTag=dh4ang-20&ItemId=0679722769&Operation=ItemLookup&ResponseGroup=Images%2CItemAttributes%2COffers%2CReviews&Service=AWSECommerceService&Timestamp="+ this.getTimeStamp() + "&Signature=" + hashInBase64;
-
-
-            
-                    
-            const headers = new Headers();
-            headers.append('Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,x-api-key');
-            headers.append('Access-Control-Allow-Methods', 'GET, POST');
-            headers.append('Access-Control-Allow-Origin', '*');
-            
+        return this.http.get('/api/amazon/' + term).map(res => <string[]> res.json());
             
 
-
-            return this.http.get(url, {headers: headers})
-            .map(res => <string[]> res.json());
-            
-*/
             
     }
 
     searchUPC(term: string) {
 
-        let upcUrl = "https://api.upcitemdb.com/prod/trial/lookup";
-        let params = new URLSearchParams();
-        params.set('upc', term);
-        return this.http.get(upcUrl, {search: params}).map(response => <string[]> response.json()).catch(this.handleError);
+        let upcUrl = '/api/upc/' + term;
+
+        return this.http.get(upcUrl).map(response => <string[]> response.json()).catch(this.handleError);
 
     }
 
-    getTimeStamp() {
-            var currentdate = new Date();
-            var year = currentdate.getUTCFullYear();
-            var monthNumber = currentdate.getUTCMonth() + 1;
-            var month;
-            if (monthNumber < 10) {
-                month = "0" + monthNumber.toString();
-            }
-            else {
-                month = monthNumber.toString();
-            }
-            var dayNumber = currentdate.getUTCDate();
-            var day;
-            if (dayNumber < 10) {
-                day = "0" + dayNumber.toString();
-            }
-            else {
-                day = dayNumber.toString();
-            }
-            var hourNumber = currentdate.getUTCHours();
-            var hour;
-            if (hourNumber < 10) {
-                hour = "0" + hourNumber.toString();
-            }
-            else {
-                hour = hourNumber.toString();
-            }
-            var minuteNumber = currentdate.getUTCMinutes();
-            var minute;
-            if (minuteNumber < 10) {
-                minute = "0" + minuteNumber.toString();
-            }
-            else {
-                minute = minuteNumber.toString();
-            }
-            var secondNumber = currentdate.getUTCSeconds();
-            var second;
-            if (secondNumber < 10) {
-                second = "0" + secondNumber.toString();
-            }
-            else {
-                second = secondNumber.toString();
-            }
-            var date = year + "-" + month + "-" + day + "T" + hour + "%3A" + minute + "%3A" + second + "Z";
-            return date;
-
-
-    }
 
     getItems(): Observable<Item[]> {
         return;

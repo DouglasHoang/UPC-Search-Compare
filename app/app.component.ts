@@ -20,9 +20,11 @@ export class AppComponent implements OnInit {
     private searchTermStream = new Subject<string>();
     itemsEbay: Observable<String[]>;
     itemsUpc: Observable<String[]>;
+    itemsAmazon: Observable<String[]>;
 
     ebayJson: any;
     upcJson: any;
+    amazonJson:any;
 
 
     search (term: string) {
@@ -50,8 +52,20 @@ export class AppComponent implements OnInit {
 
 
 
+
+
         let subscription = this.itemsEbay.subscribe(value => {if (value.findItemsByKeywordsResponse[0].ack[0] == "Success") {this.ebayJson = value;}});
-        let subscription1 = this.itemsUpc.subscribe(value => {if (value.code != "INVALID_UPC") {this.upcJson = value}});
+        let subscription1 = this.itemsUpc.subscribe(value => {if (value.code != "INVALID_UPC") {
+            this.upcJson = value;
+            console.log(value.items[0].asin);
+
+            this.itemsAmazon = itemService.searchAmazon(value.items[0].asin);
+            this.itemsAmazon.subscribe(value => {
+                this.amazonJson = value; 
+                console.log(this.amazonJson);
+                });
+                
+            }});
 
      }
 }

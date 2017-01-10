@@ -1,13 +1,45 @@
-    <ul *ngIf="items">
+    <div *ngIf="items && itemsUpc && itemsAmazon">
+        <h2>Price Summary</h2>
+
+        <table>
+            <tr>
+                <th>Vendor</th>
+                <th>Condition</th>
+                <th>Price</th>
+            </tr>
+            
+            <tr *ngFor="let item of itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].Offer">
+                <td><a [href]="itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].MoreOffersUrl[0]">Amazon</a></td>
+                <td>{{ item.OfferAttributes[0].Condition[0] }}</td>
+                <td>{{ item.OfferListing[0].Price[0].FormattedPrice[0] }}</td>
+            </tr>
+
+            <tr *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
+                <td><a [href]="item.viewItemURL">Ebay</a></td>
+                <td>{{ item.condition[0].conditionDisplayName }}</td>
+                <td>${{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}</td>
+            </tr>
 
 
-        <li *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
-            <img [src] ="item.galleryURL" alt="picture" style="width:100px;height:100px">
-            <a [href]="item.viewItemURL">{{ item.title }}</a>
-            <p>Condition: {{ item.condition[0].conditionDisplayName }}</p>
-            <p>Price: {{item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] }} {{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}</p>
 
-    
-        </li>
+            <tr *ngFor="let item of itemsUpc.items[0].offers">
+                <td><a [href]="item.link">{{ item.merchant }}</a></td>
+                <td>{{ item.condition }}</td>
+                <td>${{ item.price }}</td>
+            </tr>
+        </table>
 
-    </ul>
+<!--        
+        <ul>
+
+            <li *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
+                <img [src] ="item.galleryURL" alt="picture" style="width:100px;height:100px">
+                <a [href]="item.viewItemURL">{{ item.title }}</a>
+                <p>Condition: {{ item.condition[0].conditionDisplayName }}</p>
+                <p>Price: {{item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] }} {{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}</p>
+
+        
+            </li>
+        </ul>
+-->
+    </div>
