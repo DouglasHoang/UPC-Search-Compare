@@ -21,28 +21,17 @@ export class AppComponent implements OnInit {
     itemsEbay: Observable<String[]>;
     itemsUpc: Observable<String[]>;
     itemsAmazon: Observable<String[]>;
-    
-    searched: boolean = false;
 
     ebayJson: any;
     upcJson: any;
     amazonJson:any;
 
-    testKey: any
-
-    test(key: any) {
-        this.testKey = key;
-    }
 
     search (term: string) {
         if (!term) {
             return;
         }
-//        this.ebayJson = null
-//        this.amazonJson = null
-//        this.upcJson = null
         this.searchTermStream.next(term);
-        this.searched = true;
 
     }
 
@@ -52,39 +41,50 @@ export class AppComponent implements OnInit {
 
     constructor(private itemService: ItemService) {
         this.itemsEbay = this.searchTermStream
-        .debounceTime(0)
+        .debounceTime(300)
         .distinctUntilChanged()
         .switchMap((term: string) => this.itemService.searchEbay(term));
 
         this.itemsUpc = this.searchTermStream
-        .debounceTime(0)
+        .debounceTime(300)
         .distinctUntilChanged()
         .switchMap((term: string) => this.itemService.searchUPC(term));
 
 
 
+<<<<<<< HEAD
 
 
-        let subscription = this.itemsEbay.subscribe(value => {
-            this.ebayJson = null;
-            if (value.findItemsByKeywordsResponse[0].ack[0] == "Success") {
-                this.ebayJson = value;
-            }
-        });
-        let subscription1 = this.itemsUpc.subscribe(value => {
-            this.upcJson = null;
-            this.amazonJson = null;
-            if (value.code != "INVALID_UPC") {
-                this.upcJson = value;
-                console.log(value.items[0].asin);
-                this.itemsAmazon = itemService.searchAmazon(value.items[0].asin);
-                this.itemsAmazon.subscribe(value => {
+        let subscription = this.itemsEbay.subscribe(value => {if (value.findItemsByKeywordsResponse[0].ack[0] == "Success") {this.ebayJson = value;}});
+        let subscription1 = this.itemsUpc.subscribe(value => {if (value.code != "INVALID_UPC") {
+            this.upcJson = value;
+            console.log(value.items[0].asin);
+
+            this.itemsAmazon = itemService.searchAmazon(value.items[0].asin);
+            this.itemsAmazon.subscribe(value => {
                 this.amazonJson = value; 
                 console.log(this.amazonJson);
                 });
                 
+            }});
+=======
+        let subscription = this.itemsEbay.subscribe(value => {
+            if (value.findItemsByKeywordsResponse[0].ack[0] == "Success") {
+                this.ebayJson = value;
+            }
+            else {
+                this.ebayJson = null;
             }
         });
+        let subscription1 = this.itemsUpc.subscribe(value => {
+            if (value.code != "INVALID_UPC") {
+                this.upcJson = value; console.log(value);
+            }
+            else {
+                this.upcJson = null;
+            }
+        });
+>>>>>>> f053d5f393eeff8e3bd2afdd2184317fd0a9d0b7
 
      }
 }

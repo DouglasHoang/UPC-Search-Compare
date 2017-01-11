@@ -11,6 +11,15 @@
     border-bottom: 1px solid #ddd;
 }
 
+.search-button {
+    box-sizing: border-box;
+    height: 30px;
+    width: 100px;
+    background-color: #0D47A1;
+    color: white;
+    border: none;
+}
+
 .search {
 
     margin-left: 25px;

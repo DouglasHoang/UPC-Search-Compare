@@ -1,0 +1,13 @@
+<div class="toolbar">
+    <input #term type="text" placeholder="Search UPC" class="search" (keyup)="search(term.value)"/>
+
+</div>
+
+<div>
+    <my-description [items]="upcJson"></my-description>
+<<<<<<< HEAD
+    <my-item [items]="ebayJson" [itemsUpc] = "upcJson" [itemsAmazon] = "amazonJson"></my-item>
+=======
+    <my-item [items]="ebayJson" [itemsUPC]="upcJson"></my-item>
+>>>>>>> f053d5f393eeff8e3bd2afdd2184317fd0a9d0b7
+</div>

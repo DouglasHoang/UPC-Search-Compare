@@ -1,0 +1,27 @@
+import { Component, Input } from '@angular/core';
+import { Observable }       from 'rxjs/Observable';
+import './rxjs-operators';
+
+@Component({
+    selector: 'my-item',
+    templateUrl: '/app/html/item.component.html',
+    styleUrls: [ 'app/css/item.component.css' ],
+})
+
+export class ItemComponent {
+
+    @Input()
+    items: any;
+
+    @Input()
+<<<<<<< HEAD
+    itemsUpc: any;
+
+    @Input()
+    itemsAmazon: any;
+
+=======
+    itemsUPC: any;
+>>>>>>> f053d5f393eeff8e3bd2afdd2184317fd0a9d0b7
+    
+}

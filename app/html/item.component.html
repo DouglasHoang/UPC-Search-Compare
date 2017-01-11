@@ -1,6 +1,41 @@
-    <div *ngIf="items && itemsUpc && itemsAmazon">
+    <div *ngIf="items || itemsUpc || itemsAmazon">
         <h2>Price Summary</h2>
+        <div class="amazonItems" *ngIf="itemsAmazon">
+            <ul>
+                <li *ngFor="let item of itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].Offer">
+                    <a [href]="itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].MoreOffersUrl[0]" target="_blank">Amazon</a>
+                    {{ item.OfferAttributes[0].Condition[0] }}
+                    {{ item.OfferListing[0].Price[0].FormattedPrice[0] }}
+                </li>
+            </ul>
+        </div>
 
+        <div class="ebayItems" *ngIf="items">
+            <ul>
+                <li *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
+                    <a [href]="item.viewItemURL" target="_blank">Ebay</a>
+                    {{ item.condition[0].conditionDisplayName }}
+                    ${{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="upcItems" *ngIf="itemsUpc">
+            <ul>
+                <li *ngFor="let item of itemsUpc.items[0].offers">
+                    <a [href]="item.link" target="_blank">{{ item.merchant }}</a>
+                    {{ item.condition }}
+                    ${{ item.price }}
+                </li>
+            </ul>
+        </div>
+
+    <div *ngIf="!items && !itemsUpc && !itemsAmazon">
+        Item can't be found
+    </div>
+
+
+<!--
         <table>
             <tr>
                 <th>Vendor</th>
@@ -8,27 +43,27 @@
                 <th>Price</th>
             </tr>
             
-            <tr *ngFor="let item of itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].Offer">
-                <td><a [href]="itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].MoreOffersUrl[0]">Amazon</a></td>
+            <tr *ngIf="itemsAmazon" *ngFor="let item of itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].Offer">
+                <td><a [href]="itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].MoreOffersUrl[0]" target="_blank">Amazon</a></td>
                 <td>{{ item.OfferAttributes[0].Condition[0] }}</td>
                 <td>{{ item.OfferListing[0].Price[0].FormattedPrice[0] }}</td>
             </tr>
 
-            <tr *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
-                <td><a [href]="item.viewItemURL">Ebay</a></td>
+            <tr *ngIf="itemsEbay" *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
+                <td><a [href]="item.viewItemURL" target="_blank">Ebay</a></td>
                 <td>{{ item.condition[0].conditionDisplayName }}</td>
                 <td>${{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}</td>
             </tr>
 
 
 
-            <tr *ngFor="let item of itemsUpc.items[0].offers">
-                <td><a [href]="item.link">{{ item.merchant }}</a></td>
+            <tr *ngIf="itemsUpc" *ngFor="let item of itemsUpc.items[0].offers">
+                <td><a [href]="item.link" target="_blank">{{ item.merchant }}</a></td>
                 <td>{{ item.condition }}</td>
                 <td>${{ item.price }}</td>
             </tr>
         </table>
-
+-->
 <!--        
         <ul>
 

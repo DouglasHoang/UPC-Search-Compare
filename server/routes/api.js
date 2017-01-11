@@ -88,6 +88,34 @@ router.get('/upc/:id', (req, res) => {
 
 });
 
+router.get('/amazonUPC/:id', (req, res) => {
+    var signature = CryptoJS.HmacSHA256("GET\nwebservices.amazon.com\n/onca/xml\nAWSAccessKeyId=AKIAJJULMZAIRV5GEOLA&AssociateTag=dh4ang-20&Condition=All&IdType=UPC&ItemId=" + req.params.id + "&Operation=ItemLookup&ResponseGroup=OfferFull&SearchIndex=Electronics&Service=AWSECommerceService&Timestamp=" + getDate(), "PFThIve6mJbL0c3GX9qKV+oWfHBXqGpKB6k9apQP");
+
+    var hashInBase64 = CryptoJS.enc.Base64.stringify(signature);
+    hashInBase64 = hashInBase64.replace("=", "%3D");
+    hashInBase64 = hashInBase64.replace("+", "%2B");
+
+    var url = "https://webservices.amazon.com/onca/xml?AWSAccessKeyId=AKIAJJULMZAIRV5GEOLA&AssociateTag=dh4ang-20&Condition=All&IdType=UPC&ItemId=" + req.params.id + "&Operation=ItemLookup&ResponseGroup=OfferFull&SearchIndex=Electronics&Service=AWSECommerceService&Timestamp="+ getDate() + "&Signature=" + hashInBase64;   
+
+    var options = {
+        object: true,
+        reversible: false,
+        coerce: false,
+        sanitize: true,
+        trim: true,
+        arrayNotation: true
+    };
+
+    axios.get(`${url}`)
+    .then(posts => {
+        res.status(200).json(parser.toJson(posts.data, options));
+    })
+    .catch(error => {
+    res.status(500).send(error)
+    });
+
+})
+
 router.get('/amazon/:id', (req, res) => {
     
     var signature = CryptoJS.HmacSHA256("GET\nwebservices.amazon.com\n/onca/xml\nAWSAccessKeyId=AKIAJJULMZAIRV5GEOLA&AssociateTag=dh4ang-20&Condition=All&ItemId=" + req.params.id + "&Operation=ItemLookup&ResponseGroup=OfferFull&Service=AWSECommerceService&Timestamp=" + getDate(), "PFThIve6mJbL0c3GX9qKV+oWfHBXqGpKB6k9apQP");

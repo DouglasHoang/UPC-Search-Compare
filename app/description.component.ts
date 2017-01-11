@@ -11,4 +11,6 @@ export class DescriptionComponent {
     @Input()
     items:any;
     
+    @Input()
+    searched: boolean;
 }

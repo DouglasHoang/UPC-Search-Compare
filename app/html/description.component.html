@@ -1,19 +1,25 @@
 <div *ngIf="items">
     <div class="description">
         <div class="img-description">
-            <img [src]="items.items[0].images[0]" [alt]="items.items[0].title">
+            <img [src]="items.items[0].images[0]" [alt]="items.items[0].title" height="200px" width="200px">
         </div>
         <div class="content-desciption">
             <ul>
-                <li>{{ items.items[0].title }}</li>
-                <li>{{ items.items[0].upc }}</li>
-                <li>{{ items.items[0].brand }}</li>
-                <li>{{ items.items[0].model }}</li>
-                <li>{{ items.items[0].color }}</li>
-                <li>{{ items.items[0].size }}</li>
-                <li>{{ items.items[0].dimension }}</li>
-                <li>{{ items.items[0].weight }}</li>
+                <li>{{ "Title: " + items.items[0].title }}</li>
+                <li>{{ "Brand: " + items.items[0].brand }}</li>
+                <li>{{ "Color: " + items.items[0].color }}</li>
+                <li>{{ "Model: " + items.items[0].model }}</li>
+                <li>{{ "UPC: " + items.items[0].upc }}</li>
+                <li>{{ "EAN: " + items.items[0].ean }}</li>
+                <li>{{ "ASIN: " + items.items[0].asin }}</li>
+                <li>{{ "Dimension: " + items.items[0].dimension }}</li>
+                <li>{{ "Weight: " + items.items[0].weight }}</li>
+                <li>{{ "Description: " + items.items[0].description }}</li>
             </ul>
         </div>
     </div>
-</div> 
+</div>
+
+<div *ngIf="!items && searched">
+    <h2>Description not available</h2>
+</div>

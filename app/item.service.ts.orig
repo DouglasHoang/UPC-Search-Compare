@@ -28,7 +28,7 @@ export class ItemService {
         params.set('RESPONSE-DATA-FORMAT', 'json');
         params.set('callback', 'JSONP_CALLBACK');
         params.set('keywords', term);
-        params.set('paginationInput.entriesPerPage', '10');
+        params.set('paginationInput.entriesPerPage', '5');
         params.set('GLOBAL-ID', 'EBAY-US');
         params.set('siteid', '0'); 
 
@@ -47,7 +47,7 @@ export class ItemService {
 
     searchAmazon(term: string) {
 
-        return this.http.get('/api/amazon/' + term).map(res => <string[]> res.json()).catch(this.handleError);
+        return this.http.get('/api/amazon/' + term).map(res => <string[]> res.json());
             
 
             
@@ -55,7 +55,67 @@ export class ItemService {
 
     searchUPC(term: string) {
 
+<<<<<<< HEAD
         let upcUrl = '/api/upc/' + term;
+=======
+        let upcUrl = "https://api.upcitemdb.com/prod/trial/lookup";
+        let params = new URLSearchParams();
+        const headers = new Headers();
+        headers.append('Access-Control-Allow-Headers', 'Content-Type,X-Amz-Date,Authorization,x-api-key');
+        headers.append('Access-Control-Allow-Methods', 'GET, POST');
+        headers.append('Access-Control-Allow-Origin', '*');
+   
+        params.set('upc', term);
+        return this.http.get(upcUrl, {search: params, headers:headers}).map(response => <string[]> response.json()).catch(this.handleError);
+
+    }
+
+    getTimeStamp() {
+            var currentdate = new Date();
+            var year = currentdate.getUTCFullYear();
+            var monthNumber = currentdate.getUTCMonth() + 1;
+            var month;
+            if (monthNumber < 10) {
+                month = "0" + monthNumber.toString();
+            }
+            else {
+                month = monthNumber.toString();
+            }
+            var dayNumber = currentdate.getUTCDate();
+            var day;
+            if (dayNumber < 10) {
+                day = "0" + dayNumber.toString();
+            }
+            else {
+                day = dayNumber.toString();
+            }
+            var hourNumber = currentdate.getUTCHours();
+            var hour;
+            if (hourNumber < 10) {
+                hour = "0" + hourNumber.toString();
+            }
+            else {
+                hour = hourNumber.toString();
+            }
+            var minuteNumber = currentdate.getUTCMinutes();
+            var minute;
+            if (minuteNumber < 10) {
+                minute = "0" + minuteNumber.toString();
+            }
+            else {
+                minute = minuteNumber.toString();
+            }
+            var secondNumber = currentdate.getUTCSeconds();
+            var second;
+            if (secondNumber < 10) {
+                second = "0" + secondNumber.toString();
+            }
+            else {
+                second = secondNumber.toString();
+            }
+            var date = year + "-" + month + "-" + day + "T" + hour + "%3A" + minute + "%3A" + second + "Z";
+            return date;
+>>>>>>> f053d5f393eeff8e3bd2afdd2184317fd0a9d0b7
 
         return this.http.get(upcUrl).map(response => <string[]> response.json()).catch(this.handleError);
 
