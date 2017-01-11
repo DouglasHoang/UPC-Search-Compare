@@ -1,33 +1,53 @@
+    <h2 *ngIf= "items || itemsUpc || itemsAmazon">Price Summary</h2>
+    <div class="container">
     <div *ngIf="items || itemsUpc || itemsAmazon">
-        <h2>Price Summary</h2>
-        <div class="amazonItems" *ngIf="itemsAmazon">
-            <ul>
-                <li *ngFor="let item of itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].Offer">
-                    <a [href]="itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].MoreOffersUrl[0]" target="_blank">Amazon</a>
-                    {{ item.OfferAttributes[0].Condition[0] }}
-                    {{ item.OfferListing[0].Price[0].FormattedPrice[0] }}
-                </li>
-            </ul>
+       
+        <div class="item-description">
+            <div class="item">Merchant</div>
+            <div class="item">Condition</div>
+            <div class="item">Price</div>
+        </div>
+
+        <div *ngIf="itemsAmazon">
+                <div class="itemContainer" *ngFor="let item of itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].Offer">
+                    <div class="item">
+                        <a [href]="itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].MoreOffersUrl[0]" target="_blank">Amazon</a>
+                    </div>
+                    <div class="item">
+                        {{ item.OfferAttributes[0].Condition[0] }}
+                    </div>
+                    <div class="item">
+                        {{ item.OfferListing[0].Price[0].FormattedPrice[0] }}
+                    </div>
+                </div>
         </div>
 
         <div class="ebayItems" *ngIf="items">
-            <ul>
-                <li *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
-                    <a [href]="item.viewItemURL" target="_blank">Ebay</a>
-                    {{ item.condition[0].conditionDisplayName }}
-                    ${{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}
-                </li>
-            </ul>
+                <div class="itemContainer" *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
+                    <div class="item">
+                        <a [href]="item.viewItemURL" target="_blank">Ebay</a>
+                    </div>
+                    <div class="item">
+                        {{ item.condition[0].conditionDisplayName }}
+                    </div>
+                    <div class="item">
+                        ${{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}
+                    </div>
+                </div>
         </div>
 
         <div class="upcItems" *ngIf="itemsUpc">
-            <ul>
-                <li *ngFor="let item of itemsUpc.items[0].offers">
+            <div class="itemContainer" *ngFor="let item of itemsUpc.items[0].offers">
+                <div class="item">
                     <a [href]="item.link" target="_blank">{{ item.merchant }}</a>
+                </div>
+                <div class="item">
                     {{ item.condition }}
+                </div>
+                <div class="item">
                     ${{ item.price }}
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
 
     <div *ngIf="!items && !itemsUpc && !itemsAmazon">
@@ -35,46 +55,5 @@
     </div>
 
 
-<!--
-        <table>
-            <tr>
-                <th>Vendor</th>
-                <th>Condition</th>
-                <th>Price</th>
-            </tr>
-            
-            <tr *ngIf="itemsAmazon" *ngFor="let item of itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].Offer">
-                <td><a [href]="itemsAmazon.ItemLookupResponse[0].Items[0].Item[0].Offers[0].MoreOffersUrl[0]" target="_blank">Amazon</a></td>
-                <td>{{ item.OfferAttributes[0].Condition[0] }}</td>
-                <td>{{ item.OfferListing[0].Price[0].FormattedPrice[0] }}</td>
-            </tr>
-
-            <tr *ngIf="itemsEbay" *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
-                <td><a [href]="item.viewItemURL" target="_blank">Ebay</a></td>
-                <td>{{ item.condition[0].conditionDisplayName }}</td>
-                <td>${{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}</td>
-            </tr>
-
-
-
-            <tr *ngIf="itemsUpc" *ngFor="let item of itemsUpc.items[0].offers">
-                <td><a [href]="item.link" target="_blank">{{ item.merchant }}</a></td>
-                <td>{{ item.condition }}</td>
-                <td>${{ item.price }}</td>
-            </tr>
-        </table>
--->
-<!--        
-        <ul>
-
-            <li *ngFor="let item of items.findItemsByKeywordsResponse[0].searchResult[0].item">
-                <img [src] ="item.galleryURL" alt="picture" style="width:100px;height:100px">
-                <a [href]="item.viewItemURL">{{ item.title }}</a>
-                <p>Condition: {{ item.condition[0].conditionDisplayName }}</p>
-                <p>Price: {{item["sellingStatus"][0]["currentPrice"][0]["@currencyId"] }} {{item["sellingStatus"][0]["currentPrice"][0]["__value__"] }}</p>
-
-        
-            </li>
-        </ul>
--->
+    </div>
     </div>

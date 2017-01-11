@@ -62,7 +62,10 @@ export class AppComponent implements OnInit {
         .switchMap((term: string) => this.itemService.searchUPC(term));
 
 
-
+        this.itemsAmazon = this.searchTermStream
+        .debounceTime(0)
+        .distinctUntilChanged()
+        .switchMap((term: string) => this.itemService.searchAmazon(term));
 
 
         let subscription = this.itemsEbay.subscribe(value => {
@@ -73,18 +76,18 @@ export class AppComponent implements OnInit {
         });
         let subscription1 = this.itemsUpc.subscribe(value => {
             this.upcJson = null;
-            this.amazonJson = null;
             if (value.code != "INVALID_UPC") {
                 this.upcJson = value;
-                console.log(value.items[0].asin);
-                this.itemsAmazon = itemService.searchAmazon(value.items[0].asin);
-                this.itemsAmazon.subscribe(value => {
-                this.amazonJson = value; 
-                console.log(this.amazonJson);
-                });
-                
             }
         });
+
+        let subscription2 = this.itemsAmazon.subscribe(value => {
+          this.amazonJson = null;
+          if (!value.ItemLookupResponse[0].Items[0].Request[0].Errors) {
+            this.amazonJson = value;
+            console.log(value);
+          }
+        })
 
      }
 }

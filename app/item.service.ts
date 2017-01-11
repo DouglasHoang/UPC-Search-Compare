@@ -47,7 +47,7 @@ export class ItemService {
 
     searchAmazon(term: string) {
 
-        return this.http.get('/api/amazon/' + term).map(res => <string[]> res.json()).catch(this.handleError);
+        return this.http.get('/api/amazonUPC/' + term).map(res => <string[]> res.json()).catch(this.handleError);
             
 
             
