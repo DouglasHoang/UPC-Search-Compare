@@ -15,9 +15,17 @@
     box-sizing: border-box;
     height: 30px;
     width: 100px;
-    background-color: #0D47A1;
+    background-color: #0288d1;
     color: white;
     border: none;
+}
+
+.search-button:hover {
+    background-color: #0277bd;    
+}
+
+.search-button:active {
+    background-color: #01579b;
 }
 
 .search {
@@ -29,4 +37,11 @@
 
 div {
     height: auto;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    height: 3px;
+    background-color: green;
 }

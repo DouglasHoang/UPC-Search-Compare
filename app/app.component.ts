@@ -23,10 +23,12 @@ export class AppComponent implements OnInit {
     itemsAmazon: Observable<String[]>;
     
     searched: boolean = false;
-
     ebayJson: any;
     upcJson: any;
     amazonJson:any;
+
+    width:number;
+    loadingWidth = "0%";
 
     testKey: any
 
@@ -35,12 +37,17 @@ export class AppComponent implements OnInit {
     }
 
     search (term: string) {
-        if (!term) {
+        if (!term || term.length != 12) {
+//            console.log(term.length);
             return;
         }
+
 //        this.ebayJson = null
 //        this.amazonJson = null
 //        this.upcJson = null
+        this.width = 4;
+        this.loadingWidth = "0%";
+//        this.loadingWidth = this.width + "%";
         this.searchTermStream.next(term);
         this.searched = true;
 
@@ -70,12 +77,16 @@ export class AppComponent implements OnInit {
 
         let subscription = this.itemsEbay.subscribe(value => {
             this.ebayJson = null;
+            this.width += 33;
+            this.loadingWidth = this.width + "%";
             if (value.findItemsByKeywordsResponse[0].ack[0] == "Success") {
                 this.ebayJson = value;
             }
         });
         let subscription1 = this.itemsUpc.subscribe(value => {
             this.upcJson = null;
+            this.width += 35;
+            this.loadingWidth = this.width + "%";
             if (value.code != "INVALID_UPC") {
                 this.upcJson = value;
             }
@@ -83,6 +94,8 @@ export class AppComponent implements OnInit {
 
         let subscription2 = this.itemsAmazon.subscribe(value => {
           this.amazonJson = null;
+          this.width += 34;
+          this.loadingWidth = this.width + "%";
           if (!value.ItemLookupResponse[0].Items[0].Request[0].Errors) {
             this.amazonJson = value;
             console.log(value);
